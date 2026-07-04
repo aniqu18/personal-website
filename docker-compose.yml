@@ -1,0 +1,15 @@
+networks:
+  proxy:
+    external: true
+
+services:
+  webapp:
+    build: .
+    image: webapp:latest
+    container_name: webapp
+    restart: unless-stopped
+    networks:
+      - proxy
+    # Uncomment below to test locally without Caddy:
+    # ports:
+    #   - "8080:80"

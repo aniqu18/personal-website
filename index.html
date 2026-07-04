@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nikodem Kaczmarek</title>
+  <meta name="description" content="Master's student, researching semantic communication at Ericsson.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Zodiak:ital,wght@0,400;0,700;1,400&family=Geist+Mono:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f4f0ea;
+      --ink: #171412;
+      --muted: #625b52;
+      --accent: #5c46d6;
+      --accent-dim: rgba(92,70,214,0.10);
+      --border: rgba(23,20,18,0.10);
+      --serif: 'Zodiak', Georgia, serif;
+      --mono: 'Geist Mono', monospace;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background: #f4f0ea;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--mono);
+      font-size: 14px;
+      line-height: 1.7;
+      min-height: 100vh;
+      padding: 0 1.5rem;
+      overflow-x: hidden;
+    }
+
+    .glow-orb {
+      position: fixed;
+      top: -120px;
+      left: -80px;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(92,70,214,0.08) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .wrap {
+      position: relative;
+      z-index: 1;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    header {
+      padding: 5rem 0 3.5rem;
+      opacity: 0;
+      animation: fadeUp 0.7s ease forwards 0.1s;
+      position: relative;
+    }
+
+    .corner-deco {
+      position: absolute;
+      top: 3rem;
+      right: 0;
+      opacity: 0.28;
+      width: 110px;
+      height: 110px;
+    }
+
+    .location {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .pulse {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 10px rgba(92,70,214,0.35);
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .pulse::after {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      border-radius: 50%;
+      border: 1px solid var(--accent);
+      opacity: 0.4;
+      animation: ping 2s ease-out infinite;
+    }
+
+    @keyframes ping {
+      0%   { transform: scale(1); opacity: 0.4; }
+      100% { transform: scale(2.4); opacity: 0; }
+    }
+
+    h1 {
+      font-family: var(--serif);
+      font-size: clamp(3rem, 9vw, 5.5rem);
+      font-weight: 400;
+      line-height: 1.0;
+      letter-spacing: -0.02em;
+      margin-bottom: 2rem;
+      background-clip: text;
+    }
+
+    .tagline {
+      font-size: 0.85rem;
+      color: var(--muted);
+      max-width: 440px;
+      line-height: 1.8;
+      border-left: 2px solid var(--accent);
+      padding-left: 1rem;
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin: 3rem 0;
+      opacity: 0;
+      animation: fadeUp 0.5s ease forwards 0.5s;
+    }
+
+    .divider-line { flex: 1; height: 1px; background: var(--border); }
+    .divider-icon { opacity: 0.25; flex-shrink: 0; }
+
+    section {
+      margin-bottom: 3.5rem;
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards;
+    }
+
+    section:nth-of-type(1) { animation-delay: 0.6s; }
+    section:nth-of-type(2) { animation-delay: 0.75s; }
+    section:nth-of-type(3) { animation-delay: 0.9s; }
+    section:nth-of-type(4) { animation-delay: 1.05s; }
+
+    .section-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .about-text {
+      font-family: var(--serif);
+      font-size: 1.15rem;
+      line-height: 1.75;
+      color: var(--ink);
+      max-width: 580px;
+    }
+
+    .now-item {
+      display: grid;
+      grid-template-columns: 110px 1fr;
+      gap: 1rem;
+      padding: 0.9rem 0.6rem;
+      border-bottom: 1px solid var(--border);
+      border-radius: 6px;
+      transition: background 0.25s, padding-left 0.25s;
+      position: relative;
+    }
+
+    .now-item::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%) scaleY(0);
+      width: 2px;
+      height: 60%;
+      background: var(--accent);
+      border-radius: 2px;
+      transition: transform 0.25s;
+    }
+
+    .now-item:hover::before { transform: translateY(-50%) scaleY(1); }
+    .now-item:last-child { border-bottom: none; }
+    .now-item:hover { background: var(--accent-dim); padding-left: 1rem; }
+
+    .now-role {
+      font-size: 0.72rem;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+      padding-top: 2px;
+    }
+
+    .now-desc { font-size: 0.85rem; line-height: 1.6; }
+    .now-desc strong { font-weight: 400; color: var(--ink); }
+    .now-desc span { color: var(--muted); }
+
+    .tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+
+    .tag {
+      font-size: 0.72rem;
+      letter-spacing: 0.05em;
+      padding: 0.3rem 0.75rem;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      color: var(--muted);
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+      cursor: default;
+    }
+
+    .tag:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: var(--accent-dim);
+    }
+
+    .links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+
+    .link {
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding-bottom: 2px;
+      border-bottom: 1px solid rgba(23,20,18,0.18);
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .link:hover { color: var(--accent); border-color: var(--accent); }
+    .link svg { width: 13px; height: 13px; fill: currentColor; flex-shrink: 0; }
+
+    footer {
+      padding: 0 0 4rem;
+      opacity: 0;
+      animation: fadeUp 0.5s ease forwards 1.2s;
+    }
+
+    .footer-left { font-size: 0.65rem; color: var(--muted); letter-spacing: 0.1em; }
+
+    .footer-email {
+      font-size: 0.72rem;
+      color: var(--muted);
+      text-decoration: none;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 1px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .footer-email:hover { color: var(--accent); border-color: var(--accent); }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      padding-top: 1.5rem;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 480px) {
+      .now-item { grid-template-columns: 1fr; gap: 0.2rem; }
+      .footer-inner { flex-direction: column; align-items: flex-start; }
+      .corner-deco { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="glow-orb"></div>
+
+  <div class="wrap">
+
+    <header>
+      <!-- Constellation decoration -->
+      <svg class="corner-deco" viewBox="0 0 110 110" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <line x1="20" y1="30" x2="55" y2="18" stroke="#5c46d6" stroke-width="0.6" opacity="0.55"/>
+        <line x1="55" y1="18" x2="85" y2="40" stroke="#5c46d6" stroke-width="0.6" opacity="0.55"/>
+        <line x1="85" y1="40" x2="70" y2="72" stroke="#5c46d6" stroke-width="0.6" opacity="0.55"/>
+        <line x1="70" y1="72" x2="35" y2="80" stroke="#5c46d6" stroke-width="0.6" opacity="0.55"/>
+        <line x1="35" y1="80" x2="20" y2="30" stroke="#5c46d6" stroke-width="0.6" opacity="0.55"/>
+        <line x1="55" y1="18" x2="70" y2="72" stroke="#5c46d6" stroke-width="0.6" opacity="0.22"/>
+        <line x1="85" y1="40" x2="100" y2="20" stroke="#5c46d6" stroke-width="0.6" opacity="0.32"/>
+        <line x1="35" y1="80" x2="18" y2="95" stroke="#5c46d6" stroke-width="0.6" opacity="0.32"/>
+        <circle cx="55" cy="18" r="2.5" fill="#5c46d6"/>
+        <circle cx="85" cy="40" r="2" fill="#5c46d6" opacity="0.95"/>
+        <circle cx="70" cy="72" r="2.5" fill="#5c46d6"/>
+        <circle cx="35" cy="80" r="1.8" fill="#5c46d6" opacity="0.9"/>
+        <circle cx="20" cy="30" r="2" fill="#5c46d6" opacity="0.95"/>
+        <circle cx="100" cy="20" r="1.2" fill="#5c46d6" opacity="0.6"/>
+        <circle cx="18" cy="95" r="1.2" fill="#5c46d6" opacity="0.6"/>
+        <circle cx="48" cy="50" r="1" fill="#5c46d6" opacity="0.42"/>
+        <circle cx="90" cy="65" r="0.8" fill="#5c46d6" opacity="0.35"/>
+        <circle cx="10" cy="58" r="0.8" fill="#5c46d6" opacity="0.35"/>
+      </svg>
+
+      <h1>Nikodem<br>Kaczmarek</h1>
+
+      <p class="tagline">
+        Master's student in AI for Health at Stockholm University,
+        currently researching semantic communication at Ericsson.
+      </p>
+    </header>
+
+    <!-- Divider -->
+    <div class="divider">
+      <div class="divider-line"></div>
+      <svg class="divider-icon" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="7.5" y="1" width="3" height="16" rx="1.5" fill="#5c46d6"/>
+        <rect x="1" y="7.5" width="16" height="3" rx="1.5" fill="#5c46d6"/>
+      </svg>
+      <div class="divider-line"></div>
+    </div>
+
+    <section>
+      <div class="section-label">
+        <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+          <circle cx="5" cy="5" r="4" stroke="#5c46d6" stroke-width="1"/>
+          <circle cx="5" cy="5" r="1.5" fill="#5c46d6"/>
+        </svg>
+        About
+      </div>
+      <p class="about-text">
+        I enjoy fixing things that don’t work, not too strong coffee (though that varies with the mood), and spending time with people. I may be a nerd, but that depends on the definition.
+      </p>
+    </section>
+
+
+
+
+
+
+
+    <section>
+      <div class="section-label">
+        <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+          <circle cx="5" cy="5" r="4" stroke="#5c46d6" stroke-width="1"/>
+          <circle cx="5" cy="5" r="1.5" fill="#5c46d6"/>
+        </svg>
+        Links
+      </div>
+      <div class="links">
+        <a href="https://github.com/aniqu18" target="_blank" rel="noopener" class="link">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+          GitHub
+        </a>
+        <a href="https://linkedin.com/in/nikodemkaczmarek" target="_blank" rel="noopener" class="link">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          LinkedIn
+        </a>
+      </div>
+    </section>
+
+    <footer>
+      <!-- Decorative SVG footer rule -->
+      <svg width="100%" height="20" viewBox="0 0 680 20" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <line x1="0" y1="10" x2="290" y2="10" stroke="rgba(23,20,18,0.10)" stroke-width="1"/>
+        <circle cx="300" cy="10" r="2" fill="rgba(92,70,214,0.5)"/>
+        <line x1="306" y1="10" x2="316" y2="10" stroke="rgba(92,70,214,0.34)" stroke-width="1"/>
+        <circle cx="321" cy="10" r="1" fill="rgba(92,70,214,0.34)"/>
+        <line x1="326" y1="10" x2="336" y2="10" stroke="rgba(92,70,214,0.34)" stroke-width="1"/>
+        <circle cx="340" cy="10" r="3" fill="rgba(92,70,214,0.62)"/>
+        <line x1="344" y1="10" x2="354" y2="10" stroke="rgba(92,70,214,0.34)" stroke-width="1"/>
+        <circle cx="359" cy="10" r="1" fill="rgba(92,70,214,0.34)"/>
+        <line x1="364" y1="10" x2="374" y2="10" stroke="rgba(92,70,214,0.34)" stroke-width="1"/>
+        <circle cx="380" cy="10" r="2" fill="rgba(92,70,214,0.5)"/>
+        <line x1="390" y1="10" x2="680" y2="10" stroke="rgba(23,20,18,0.10)" stroke-width="1"/>
+      </svg>
+      <div class="footer-inner">
+        <span class="footer-left">Nikodem Kaczmarek &mdash; 2026</span>
+        <a href="mailto:me@nikodemkaczmarek.com" class="footer-email">me@nikodemkaczmarek.com</a>
+      </div>
+    </footer>
+
+  </div>
+</body>
+</html>
