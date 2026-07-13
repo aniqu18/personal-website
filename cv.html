@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nikodem Kaczmarek — CV</title>
+  <meta name="description" content="CV of Nikodem Kaczmarek">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Zodiak:ital,wght@0,400;0,700;1,400&family=Geist+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #ffffff;
+      --ink: #171412;
+      --muted: #6b645a;
+      --accent: #4f46e5;
+      --accent-dim: rgba(79,70,229,0.10);
+      --border: rgba(23,20,18,0.10);
+      --serif: 'Zodiak', Georgia, serif;
+      --mono: 'Geist Mono', monospace;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--mono);
+      font-size: 14px;
+      line-height: 1.7;
+      padding: 0 1.5rem 4rem;
+      min-height: 100vh;
+    }
+
+    .wrap {
+      max-width: 980px;
+      margin: 0 auto;
+    }
+
+    .menu {
+      padding-top: 1.5rem;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .menu-links {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.32rem;
+      border: 1px solid rgba(27,24,20,0.10);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.7);
+    }
+
+    .menu-link {
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--muted);
+      border-radius: 999px;
+      padding: 0.46rem 0.72rem;
+      transition: color 0.2s, background 0.2s;
+    }
+
+    .menu-link:hover { color: var(--accent); }
+    .menu-link.active {
+      color: var(--ink);
+      background: var(--accent-dim);
+    }
+
+    header {
+      margin-top: 1.8rem;
+      margin-bottom: 1.8rem;
+      padding-bottom: 1.2rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    h1 {
+      font-family: var(--serif);
+      font-size: clamp(2.3rem, 5vw, 3.4rem);
+      font-weight: 400;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+
+    .headline {
+      margin-top: 0.4rem;
+      color: var(--muted);
+      font-size: 0.9rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .contact {
+      margin-top: 1rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.9rem 1.2rem;
+      font-size: 0.8rem;
+    }
+
+    .contact a { color: var(--ink); text-decoration: none; }
+    .contact a:hover { color: var(--accent); }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 2rem;
+    }
+
+    .section {
+      margin-top: 1.6rem;
+      border-top: 1px solid var(--border);
+      padding-top: 0.9rem;
+    }
+
+    main .section:first-child,
+    aside .section:first-child {
+      margin-top: 0;
+      border-top: none;
+      padding-top: 0;
+    }
+
+    .section h2 {
+      font-size: 0.72rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.8rem;
+      font-weight: 400;
+    }
+
+    .entry {
+      margin-bottom: 0.95rem;
+    }
+
+    .entry-title {
+      font-family: var(--serif);
+      font-size: 1rem;
+      line-height: 1.4;
+    }
+
+    .entry-meta {
+      color: var(--muted);
+      font-size: 0.78rem;
+      letter-spacing: 0.03em;
+      margin-bottom: 0.25rem;
+    }
+
+    .entry p {
+      font-size: 0.88rem;
+      line-height: 1.6;
+    }
+
+    .language-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.7rem 1rem;
+    }
+
+    .keywords {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.42rem;
+    }
+
+    .keywords span {
+      font-size: 0.72rem;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 0.24rem 0.58rem;
+      color: var(--muted);
+    }
+
+    a { color: var(--ink); }
+    a:hover { color: var(--accent); }
+
+    @media (max-width: 860px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 0.3rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <nav class="menu" aria-label="Main menu">
+      <div class="menu-links">
+        <a class="menu-link" href="/">Home</a>
+        <a class="menu-link active" href="/cv.html">CV</a>
+      </div>
+    </nav>
+
+    <header>
+      <h1>Nikodem Kaczmarek</h1>
+      <p class="headline">Artificial Intelligence Student & Intern</p>
+      <div class="contact">
+        <a href="mailto:me@nikodemkaczmarek.com">me@nikodemkaczmarek.com</a>
+        <span>Stockholm</span>
+      </div>
+    </header>
+
+    <div class="layout">
+      <main>
+        <section class="section">
+          <h2>Experience</h2>
+          <article class="entry">
+            <p class="entry-title">Master Thesis Intern · Ericsson</p>
+            <p class="entry-meta">Stockholm · 2026 - Present</p>
+          </article>
+          <article class="entry">
+            <p class="entry-title">Dog Walker · Tassevärld</p>
+            <p class="entry-meta">Stockholm · 2025</p>
+          </article>
+          <article class="entry">
+            <p class="entry-title">Software Developer · Kyri. Good Research (Startup Project)</p>
+            <p class="entry-meta">Stockholm · 2025</p>
+          </article>
+          <article class="entry">
+            <p class="entry-title">Unity Software Developer · Poznan University of Economics and Business</p>
+            <p class="entry-meta">Poznan · 2023 - 2024</p>
+          </article>
+          <article class="entry">
+            <p class="entry-title">Customer Service Specialist · Via Vox Group</p>
+            <p class="entry-meta">Poznan · 2020 - 2022</p>
+          </article>
+          <article class="entry">
+            <p class="entry-title">Event Assistant · Wielkopolski Związek Kajakowy</p>
+            <p class="entry-meta">Poznan · 2020 - 2023</p>
+          </article>
+        </section>
+
+        <section class="section">
+          <h2>Education</h2>
+          <article class="entry">
+            <p class="entry-title">Stockholm University</p>
+            <p class="entry-meta">Master’s Programme in AI for Health · 2024 - Present</p>
+          </article>
+          <article class="entry">
+            <p class="entry-title">Poznan University of Economics and Business</p>
+            <p class="entry-meta">Bachelor’s Programme in Informatics and Econometrics · 2021 - 2024</p>
+          </article>
+          <article class="entry">
+            <p class="entry-title">PSI Poland</p>
+            <p class="entry-meta">Java Course · 2023</p>
+          </article>
+        </section>
+
+        <section class="section">
+          <h2>Languages</h2>
+          <div class="language-grid">
+            <div class="entry">
+              <p class="entry-title">Polish</p>
+              <p class="entry-meta">Native</p>
+            </div>
+            <div class="entry">
+              <p class="entry-title">English</p>
+              <p class="entry-meta">C1 (IELTS)</p>
+            </div>
+            <div class="entry">
+              <p class="entry-title">Spanish</p>
+              <p class="entry-meta">B1</p>
+            </div>
+            <div class="entry">
+              <p class="entry-title">Swedish</p>
+              <p class="entry-meta">A2</p>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <aside>
+        <section class="section">
+          <h2>Skills</h2>
+          <div class="entry">
+            <p class="entry-title">Programming</p>
+            <div class="keywords">
+              <span>Java</span><span>C#</span><span>Python</span><span>SQL</span><span>Unity</span><span>JavaScript</span><span>TypeScript</span><span>React</span><span>CI/CD</span><span>Linux</span><span>.NET</span><span>REST APIs</span><span>Full-Stack</span><span>Git</span><span>GitHub Actions</span><span>Bash</span><span>CSS3</span><span>Kotlin</span><span>YAML</span>
+            </div>
+          </div>
+          <div class="entry">
+            <p class="entry-title">Data Science & Statistics</p>
+            <div class="keywords">
+              <span>NumPy</span><span>Pandas</span><span>Matplotlib</span><span>PyTorch</span><span>Scikit-learn</span><span>R</span><span>Machine Learning</span><span>Data visualization</span><span>CNNs</span><span>Image processing</span><span>Semantic communication</span><span>Task-aware encoding</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <h2>Certifications</h2>
+          <article class="entry">
+            <p class="entry-title">AI Agents</p>
+            <p class="entry-meta">Hugging Face · March 2025</p>
+          </article>
+          <article class="entry">
+            <p class="entry-title">IELTS</p>
+            <p class="entry-meta">IELTS Official · December 2023</p>
+          </article>
+        </section>
+      </aside>
+    </div>
+  </div>
+</body>
+</html>
