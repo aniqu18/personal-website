@@ -1,0 +1,12 @@
+---
+const { current = 'home' } = Astro.props;
+---
+
+<nav class="navbar nav-pill navbar-expand-sm rounded-pill px-3 px-md-4 py-2 mb-4">
+  <div class="container-fluid px-0 justify-content-end">
+    <div class="d-flex gap-2">
+      <a class={`btn btn-sm rounded-pill px-3 ${current === 'home' ? 'btn-dark' : 'btn-outline-secondary'}`} href="/">Home</a>
+      <a class={`btn btn-sm rounded-pill px-3 ${current === 'cv' ? 'btn-dark' : 'btn-outline-secondary'}`} href="/cv/">CV</a>
+    </div>
+  </div>
+</nav>

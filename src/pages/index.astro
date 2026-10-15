@@ -1,0 +1,127 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+
+const publications = [
+  {
+    title: 'Analyzing Novice Programming Behavior in Educational Game Environment: A Custom Language Study with Semantic Adaptation',
+    href: 'https://www.scitepress.org/Link.aspx?doi=10.5220/0014833100004021',
+    meta: 'SciTePress · 2026',
+  },
+  {
+    title: 'Task-aware Semantic Communication for Clustering-based Object Detection in Fire Scenarios',
+    href: 'https://www.diva-portal.org/smash/record.jsf?pid=diva2%3A2080819&dswid=-696',
+    meta: 'Stockholm University · 2026',
+  },
+];
+---
+
+<style>
+  .index-home .hero-title,
+  .index-home .section-title,
+  .index-home .publication-title,
+  .index-home .lead-copy,
+  .index-home .accent-link,
+  .index-home .about-copy {
+    font-family: 'Inter', system-ui, sans-serif !important;
+  }
+
+  .index-home .hero-title {
+    white-space: nowrap;
+    font-size: clamp(3.2rem, 5.2vw, 5rem);
+    letter-spacing: -0.04em;
+  }
+
+  .index-home .lead-copy,
+  .index-home .about-copy,
+  .index-home .publication-title,
+  .index-home .publication-meta {
+    letter-spacing: normal;
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+
+  .index-home .about-copy {
+    font-size: 1rem;
+  }
+
+  .index-home .publication-meta {
+    color: #6c645e;
+  }
+
+  .index-home .publication-title,
+  .index-home .accent-link {
+    color: #0d6efd !important;
+  }
+
+  .index-home .accent-link:hover,
+  .index-home .publication-title:hover {
+    color: #0a58ca !important;
+  }
+</style>
+
+<BaseLayout title="Nikodem Kaczmarek" description="Master's student, researching semantic communication at Ericsson." current="home">
+  <Fragment slot="nav">
+    <Nav current="home" />
+  </Fragment>
+
+  <div class="index-home">
+  <header class="hero-card rounded-5 p-3 mb-1">
+    <h1 class="hero-title mb-1">Nikodem Kaczmarek</h1>
+    <p class="lead-copy mb-0">
+      Master's student in AI for Health at Stockholm University,
+      currently researching semantic communication at Ericsson.
+    </p>
+  </header>
+
+  <section class="soft-card rounded-5 p-3 p-md-3 mb-1">
+    <div class="d-flex align-items-center gap-2 mb-1 section-title">
+      <i class="bi bi-person-circle"></i>
+      <span>About</span>
+    </div>
+    <p class="about-copy mb-0">
+      I enjoy fixing things that don’t work, not too strong coffee (though that varies with the mood), and spending time with people.<br />I may be a nerd, but that depends on the definition.
+    </p>
+  </section>
+
+  <section class="soft-card rounded-5 p-3 p-md-3 mb-1">
+    <div class="d-flex align-items-center gap-2 mb-1 section-title">
+      <i class="bi bi-journal-text"></i>
+      <span>Publications</span>
+    </div>
+    <div class="vstack gap-0">
+      {publications.map((pub) => (
+        <article class="publication-item pt-1">
+          <a class="publication-title accent-link text-decoration-none" href={pub.href} target="_blank" rel="noopener">
+            {pub.title}
+          </a>
+          <div class="publication-meta mt-1">{pub.meta}</div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="soft-card rounded-5 p-3 p-md-3 mb-0">
+    <div class="d-flex align-items-center gap-2 mb-1 section-title">
+      <i class="bi bi-link-45deg"></i>
+      <span>Links</span>
+    </div>
+    <div class="d-flex flex-wrap gap-2">
+      <a href="https://github.com/aniqu18" target="_blank" rel="noopener" class="btn btn-outline-dark rounded-pill px-3">
+        <i class="bi bi-github me-1"></i>GitHub
+      </a>
+      <a href="https://linkedin.com/in/nikodemkaczmarek" target="_blank" rel="noopener" class="btn btn-outline-dark rounded-pill px-3">
+        <i class="bi bi-linkedin me-1"></i>LinkedIn
+      </a>
+    </div>
+  </section>
+
+  <footer class="pb-4">
+    <div class="footer-rule mb-3"></div>
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 px-3">
+      <span class="text-uppercase small text-secondary">Nikodem Kaczmarek (2026)</span>
+      <a href="mailto:me@nikodemkaczmarek.com" class="accent-link small">me@nikodemkaczmarek.com</a>
+    </div>
+  </footer>
+  </div>
+</BaseLayout>
