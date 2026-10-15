@@ -1,0 +1,237 @@
+---
+// The coloured half of the page: navigation, the kinetic name, and whatever the page adds below it.
+const { current = 'home', name = 'Nikodem Kaczmarek', fill = 0.8 } = Astro.props;
+
+const links = [
+  { id: 'home', href: '/v2/', label: 'Home' },
+  { id: 'cv', href: '/v2/cv/', label: 'CV' },
+];
+
+const lines = name.split(' ');
+---
+
+<aside class="panel">
+  <nav aria-label="Main">
+    {links.map((link) => (
+      <a href={link.href} aria-current={current === link.id ? 'page' : undefined}>{link.label}</a>
+    ))}
+  </nav>
+
+  <div class="panel-main">
+    <h1 class="kinetic" aria-label={name} data-fill={fill}>
+      {lines.map((line, li) => (
+        <>
+          {li > 0 && ' '}
+          <span class="line" aria-hidden="true">
+            {[...line].map((ch) => <span class="ch">{ch}</span>)}
+          </span>
+        </>
+      ))}
+    </h1>
+    <slot />
+  </div>
+
+  <slot name="foot" />
+</aside>
+
+<style>
+  .panel {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 1.75rem clamp(1.5rem, 3.5vw, 3rem) 2rem;
+    background: var(--field);
+    color: var(--on-field);
+    overflow: hidden;
+  }
+
+  nav {
+    display: flex;
+    gap: 0.4rem;
+    font-size: 0.9375rem;
+    font-weight: 500;
+  }
+
+  nav a {
+    padding: 0.3rem 0.9rem;
+    border: 1.5px solid transparent;
+    border-radius: 999px;
+    color: var(--on-field-muted);
+    text-decoration: none;
+    transition: color 0.15s, border-color 0.15s;
+  }
+
+  nav a:hover { color: var(--on-field); }
+
+  nav a[aria-current='page'] {
+    color: var(--on-field);
+    border-color: var(--on-field);
+  }
+
+  nav a:focus-visible { outline-color: var(--on-field); }
+
+  .panel-main {
+    margin: auto 0;
+    padding: 2rem 0;
+  }
+
+  .kinetic {
+    font-family: var(--display);
+    font-size: clamp(3.5rem, 9vw, 9rem);
+    line-height: 0.86;
+    letter-spacing: -0.01em;
+    user-select: none;
+  }
+
+  .line {
+    display: block;
+    width: max-content;
+    white-space: nowrap;
+  }
+
+  .ch {
+    display: inline-block;
+    --w: 64;
+    --g: 820;
+    font-variation-settings: 'wdth' var(--w), 'wght' var(--g);
+  }
+
+  :global(.js) .kinetic:not(.on) .ch {
+    --w: 50;
+    --g: 100;
+    opacity: 0;
+  }
+
+  .kinetic.on .ch {
+    transition:
+      font-variation-settings 0.7s cubic-bezier(0.2, 0.7, 0.2, 1),
+      opacity 0.4s;
+    transition-delay: calc(var(--i, 0) * 45ms);
+  }
+
+  .kinetic.live .ch {
+    transition: font-variation-settings 0.35s cubic-bezier(0.2, 0.7, 0.2, 1);
+    transition-delay: 0s;
+  }
+
+  .kinetic.measuring .ch {
+    font-variation-settings: 'wdth' 64, 'wght' 820 !important;
+    transition: none !important;
+  }
+
+  @media (max-width: 860px) {
+    .panel {
+      position: relative;
+      height: auto;
+      padding: 1rem 1rem 1.75rem;
+    }
+
+    .panel-main {
+      margin: 0;
+      padding: clamp(3.5rem, 16vw, 6rem) 0 0;
+    }
+
+    .kinetic { line-height: 0.88; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :global(.js) .kinetic:not(.on) .ch { opacity: 1; --w: 64; --g: 820; }
+    .kinetic.on .ch { transition: none !important; }
+  }
+
+  @media print {
+    .panel { position: static; height: auto; padding: 0 0 1rem; }
+    nav { display: none; }
+    :global(.js) .kinetic .ch { opacity: 1; --w: 64; --g: 820; }
+  }
+</style>
+
+<script>
+  const REST = { w: 64, g: 820 };
+  const PEAK = { w: 138, g: 900 };
+
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+  function setup(h1: HTMLElement) {
+    const panel = h1.closest('.panel') as HTMLElement;
+    const letters = [...h1.querySelectorAll<HTMLElement>('.ch')];
+    const lines = [...h1.querySelectorAll<HTMLElement>('.line')];
+    const narrow = window.matchMedia('(max-width: 860px)');
+    let centres: { x: number; y: number }[] = [];
+    let radius = 200;
+
+    letters.forEach((l, i) => l.style.setProperty('--i', String(i)));
+
+    // Size the name so its widest line fills the panel at rest, then remember where each letter sits.
+    const fit = () => {
+      h1.classList.add('measuring');
+      h1.style.fontSize = '100px';
+      const widest = Math.max(...lines.map((l) => l.getBoundingClientRect().width));
+      const fill = narrow.matches ? 0.98 : Number(h1.dataset.fill) || 0.8;
+      const size = (100 * (h1.parentElement as HTMLElement).clientWidth * fill) / widest;
+      h1.style.fontSize = `${size}px`;
+      const box = h1.getBoundingClientRect();
+      centres = letters.map((l) => {
+        const r = l.getBoundingClientRect();
+        return { x: r.left + r.width / 2 - box.left, y: r.top + r.height / 2 - box.top };
+      });
+      radius = size * 1.5;
+      h1.classList.remove('measuring');
+    };
+
+    const setRest = () => letters.forEach((l) => {
+      l.style.removeProperty('--w');
+      l.style.removeProperty('--g');
+    });
+
+    let pointer: { x: number; y: number } | null = null;
+    let frame = 0;
+
+    const draw = () => {
+      frame = 0;
+      if (!pointer) return setRest();
+      const box = h1.getBoundingClientRect();
+      const px = pointer.x - box.left;
+      const py = pointer.y - box.top;
+      letters.forEach((l, i) => {
+        const c = centres[i];
+        const d = Math.hypot(px - c.x, (py - c.y) * 1.3);
+        const t = Math.max(0, 1 - d / radius) ** 2;
+        l.style.setProperty('--w', (REST.w + (PEAK.w - REST.w) * t).toFixed(1));
+        l.style.setProperty('--g', (REST.g + (PEAK.g - REST.g) * t).toFixed(0));
+      });
+    };
+
+    const queue = () => { if (!frame) frame = requestAnimationFrame(draw); };
+
+    // Fonts load lazily, so ask for the display face before measuring with it.
+    document.fonts.load('820 100px Anybody').then(() => document.fonts.ready).then(() => {
+      fit();
+      document.fonts.addEventListener('loadingdone', fit);
+      requestAnimationFrame(() => h1.classList.add('on'));
+      if (reduced) return;
+      setTimeout(() => {
+        h1.classList.add('live');
+        if (!finePointer) return;
+        panel.addEventListener('pointermove', (e) => { pointer = { x: e.clientX, y: e.clientY }; queue(); });
+        panel.addEventListener('pointerleave', () => { pointer = null; queue(); });
+      }, 1400);
+    });
+
+    // Refit whenever the panel's width changes (window resize, rotation, a scrollbar appearing).
+    let lastWidth = 0;
+    let resizeTimer = 0;
+    new ResizeObserver(([entry]) => {
+      const width = entry.contentRect.width;
+      if (width === lastWidth) return;
+      lastWidth = width;
+      clearTimeout(resizeTimer);
+      resizeTimer = window.setTimeout(fit, 80);
+    }).observe(h1.parentElement as HTMLElement);
+  }
+
+  document.querySelectorAll<HTMLElement>('.kinetic').forEach(setup);
+</script>

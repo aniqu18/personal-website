@@ -1,0 +1,147 @@
+---
+const { title, description } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light dark" />
+    <script is:inline>document.documentElement.classList.add('js');</script>
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Anybody:wdth,wght@50..150,100..900&family=Recursive:wght,CASL@300..800,0..1&display=swap" rel="stylesheet" />
+    <style is:global>
+      :root {
+        --paper: #e4eee7;
+        --ink: #0f2a1f;
+        --muted: #4c6a5c;
+        --line: #bfd2c5;
+        --field: #5b3df0;
+        --on-field: #f4f1ff;
+        --on-field-muted: #cbc2fb;
+        --mark: #5b3df0;
+        --hover: #d5e5da;
+
+        --display: 'Anybody', 'Arial Narrow', sans-serif;
+        --text: 'Recursive', system-ui, sans-serif;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --paper: #0d1a14;
+          --ink: #dcebe1;
+          --muted: #8fab9c;
+          --line: #22362b;
+          --field: #4a30d6;
+          --on-field: #f4f1ff;
+          --on-field-muted: #c2b7ff;
+          --mark: #8a74ff;
+          --hover: #15271e;
+        }
+      }
+
+      *, *::before, *::after { box-sizing: border-box; }
+
+      html { background: var(--paper); }
+
+      body {
+        margin: 0;
+        background: var(--paper);
+        color: var(--ink);
+        font-family: var(--text);
+        font-variation-settings: 'CASL' 0.35;
+        font-size: 1.0625rem;
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      p, h1, h2, h3, ul { margin: 0; }
+
+      a { color: inherit; }
+
+      a:focus-visible {
+        outline: 2px solid var(--mark);
+        outline-offset: 3px;
+        border-radius: 4px;
+      }
+
+      ::selection { background: var(--field); color: var(--on-field); }
+
+      .split {
+        display: grid;
+        grid-template-columns: minmax(0, 45fr) minmax(0, 55fr);
+        min-height: 100vh;
+      }
+
+      .content {
+        padding: clamp(5rem, 14vh, 9rem) clamp(1.5rem, 5vw, 5rem) 0;
+      }
+
+      .content-inner { max-width: 38rem; }
+
+      .block { margin-top: 4.5rem; }
+
+      .block-title {
+        margin-bottom: 1.25rem;
+        font-family: var(--display);
+        font-variation-settings: 'wdth' 120, 'wght' 700;
+        font-size: 1.625rem;
+        line-height: 1.1;
+        letter-spacing: -0.01em;
+      }
+
+      .meta {
+        color: var(--muted);
+        font-size: 0.9375rem;
+        font-variant-numeric: tabular-nums;
+      }
+
+      .content-foot {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 0.5rem 1.5rem;
+        margin-top: 6rem;
+        padding: 1.5rem 0 2.5rem;
+        border-top: 1.5px solid var(--ink);
+        font-size: 0.9375rem;
+        color: var(--muted);
+      }
+
+      .content-foot a {
+        color: var(--ink);
+        text-decoration-color: var(--mark);
+        text-decoration-thickness: 2px;
+        text-underline-offset: 0.2em;
+      }
+
+      @media (max-width: 860px) {
+        body { font-size: 1rem; }
+        .split { grid-template-columns: 1fr; align-content: start; }
+        .content { padding: 2.5rem 1rem 0; }
+        .block { margin-top: 3rem; }
+        .block-title { font-size: 1.375rem; margin-bottom: 1rem; }
+        .content-foot { margin-top: 4rem; padding-bottom: 2rem; }
+      }
+
+      @media print {
+        :root {
+          --paper: #fff; --ink: #000; --muted: #444; --line: #ccc;
+          --field: #fff; --on-field: #000; --on-field-muted: #444; --mark: #000;
+        }
+        .split { display: block; }
+        .content { padding: 0; }
+        .content-foot { display: none; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="split">
+      <slot />
+    </div>
+  </body>
+</html>

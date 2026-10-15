@@ -1,0 +1,287 @@
+---
+import V2Layout from '../../layouts/V2Layout.astro';
+import Panel from '../../components/v2/Panel.astro';
+
+
+const experience = [
+  ['Master Thesis Intern · Ericsson', 'Stockholm · 2026 - Present'],
+  ['Dog Walker · Tassevärld', 'Stockholm · 2025'],
+  ['Software Developer · Kyri. Good Research (Startup Project)', 'Stockholm · 2025'],
+  ['Unity Software Developer · Poznan University of Economics and Business', 'Poznan · 2023 - 2024'],
+  ['Customer Service Specialist · Via Vox Group', 'Poznan · 2020 - 2022'],
+  ['Event Assistant · Wielkopolski Związek Kajakowy', 'Poznan · 2020 - 2023'],
+];
+
+const education = [
+  ['Stockholm University', 'Master’s Programme in AI for Health · 2024 - Present'],
+  ['Poznan University of Economics and Business', 'Bachelor’s Programme in Informatics and Econometrics · 2021 - 2024'],
+  ['PSI Poland', 'Java Course · 2023'],
+];
+
+const languages = [
+  ['Polish', 'Native'],
+  ['English', 'C1 (IELTS)'],
+  ['Spanish', 'B1'],
+  ['Swedish', 'A2'],
+];
+
+const programmingSkills = ['Java', 'C#', 'Python', 'SQL', 'Unity', 'JavaScript', 'TypeScript', 'React', 'CI/CD', 'Linux', '.NET', 'REST APIs', 'Full-Stack', 'Git', 'GitHub Actions', 'Bash', 'CSS3', 'Kotlin', 'YAML'];
+const dataSkills = ['NumPy', 'Pandas', 'Matplotlib', 'PyTorch', 'Scikit-learn', 'R', 'Machine Learning', 'Data visualization', 'CNNs', 'Image processing', 'Semantic communication', 'Task-aware encoding'];
+
+// Experience and education spans are drawn on a shared 2020–2026 track.
+const FIRST = 2020;
+const LAST = 2026;
+const span = (meta) => {
+  const m = meta.match(/(\d{4})(?:\s*-\s*(\d{4}|Present))?/);
+  if (!m) return null;
+  const start = Number(m[1]);
+  const open = m[2] === 'Present';
+  const end = open ? LAST : Number(m[2] ?? m[1]);
+  const years = LAST - FIRST + 1;
+  return {
+    left: ((start - FIRST) / years) * 100,
+    width: ((end - start + 1) / years) * 100,
+    open,
+  };
+};
+
+const levelSteps = { Native: 6, C2: 6, C1: 5, B2: 4, B1: 3, A2: 2, A1: 1 };
+const steps = (level) => levelSteps[level.split(' ')[0]] ?? 0;
+---
+
+<V2Layout title="Nikodem Kaczmarek — CV" description="CV of Nikodem Kaczmarek">
+  <Panel current="cv" fill={0.8}>
+    <p class="headline">Artificial Intelligence Student & Intern</p>
+    <p class="contact">
+      <a href="mailto:me@nikodemkaczmarek.com">me@nikodemkaczmarek.com</a>
+      <span>Stockholm</span>
+    </p>
+  </Panel>
+
+  <main class="content">
+    <div class="content-inner">
+      <section class="block first" aria-labelledby="experience">
+        <h2 class="block-title" id="experience">Experience</h2>
+        <ul class="entries">
+          {experience.map(([title, meta]) => {
+            const s = span(meta);
+            return (
+              <li class="entry">
+                <p class="entry-title">{title}</p>
+                <p class="meta">{meta}</p>
+                {s && (
+                  <div class="track" aria-hidden="true">
+                    <span class:list={['bar', { open: s.open }]} style={`left:${s.left}%;width:${s.width}%`}></span>
+                  </div>
+                )}
+              </li>
+            );
+          })}
+        </ul>
+      </section>
+
+      <section class="block" aria-labelledby="education">
+        <h2 class="block-title" id="education">Education</h2>
+        <ul class="entries">
+          {education.map(([title, meta]) => {
+            const s = span(meta);
+            return (
+              <li class="entry">
+                <p class="entry-title">{title}</p>
+                <p class="meta">{meta}</p>
+                {s && (
+                  <div class="track" aria-hidden="true">
+                    <span class:list={['bar', { open: s.open }]} style={`left:${s.left}%;width:${s.width}%`}></span>
+                  </div>
+                )}
+              </li>
+            );
+          })}
+        </ul>
+      </section>
+
+      <section class="block" aria-labelledby="languages">
+        <h2 class="block-title" id="languages">Languages</h2>
+        <ul class="languages">
+          {languages.map(([language, level]) => (
+            <li>
+              <p class="entry-title">{language}</p>
+              <p class="meta">{level}</p>
+              <div class="meter" aria-hidden="true">
+                {Array.from({ length: 6 }, (_, i) => <span class:list={{ on: i < steps(level) }}></span>)}
+              </div>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section class="block" aria-labelledby="skills">
+        <h2 class="block-title" id="skills">Skills</h2>
+        <div class="skill-groups">
+          <div>
+            <h3>Programming</h3>
+            <ul class="chips">
+              {programmingSkills.map((skill) => <li>{skill}</li>)}
+            </ul>
+          </div>
+          <div>
+            <h3>Data Science & Statistics</h3>
+            <ul class="chips">
+              {dataSkills.map((skill) => <li>{skill}</li>)}
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="block" aria-labelledby="certifications">
+        <h2 class="block-title" id="certifications">Certifications</h2>
+        <ul class="entries">
+          <li class="entry">
+            <p class="entry-title">AI Agents</p>
+            <p class="meta">Hugging Face · March 2025</p>
+          </li>
+          <li class="entry">
+            <p class="entry-title">IELTS</p>
+            <p class="meta">IELTS Official · December 2023</p>
+          </li>
+        </ul>
+      </section>
+
+      <div class="cv-end"></div>
+    </div>
+  </main>
+</V2Layout>
+
+<style>
+  .headline {
+    margin-top: 1.5rem;
+    font-size: clamp(1.125rem, 1.8vw, 1.375rem);
+    color: var(--on-field);
+  }
+
+  .contact {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 1.25rem;
+    margin-top: 0.75rem;
+    color: var(--on-field-muted);
+  }
+
+  .contact a {
+    color: var(--on-field);
+    text-decoration-thickness: 1.5px;
+    text-underline-offset: 0.2em;
+  }
+
+  .contact a:focus-visible { outline-color: var(--on-field); }
+
+  .entries {
+    padding: 0;
+    list-style: none;
+    border-top: 1.5px solid var(--ink);
+  }
+
+  .entry { padding: 1rem 0 0.4rem; }
+
+  .entry-title {
+    font-variation-settings: 'CASL' 0.35, 'wght' 580;
+    font-size: 1.0625rem;
+    line-height: 1.4;
+  }
+
+  .entry .meta { margin-top: 0.15rem; }
+
+  /* One cell per year, 2020–2026 */
+  .track {
+    position: relative;
+    height: 6px;
+    margin-top: 0.75rem;
+    background:
+      repeating-linear-gradient(to right, var(--line) 0 1px, transparent 1px calc(100% / 7)),
+      linear-gradient(var(--line), var(--line)) center / 100% 1px no-repeat;
+  }
+
+  .bar {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    border-radius: 4px;
+    background: var(--mark);
+    box-shadow: 0 0 0 2px var(--paper);
+  }
+
+  .bar.open {
+    border-radius: 4px 0 0 4px;
+    background: linear-gradient(to right, var(--mark) 55%, transparent);
+  }
+
+  .languages {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.25rem;
+    padding: 1rem 0 0;
+    list-style: none;
+    border-top: 1.5px solid var(--ink);
+  }
+
+  .meter {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 2px;
+    margin-top: 0.6rem;
+  }
+
+  .meter span {
+    height: 6px;
+    background: var(--line);
+  }
+
+  .meter span:first-child { border-radius: 4px 0 0 4px; }
+  .meter span:last-child { border-radius: 0 4px 4px 0; }
+  .meter span.on { background: var(--mark); }
+
+  .skill-groups {
+    display: grid;
+    gap: 1.75rem;
+    padding-top: 1rem;
+    border-top: 1.5px solid var(--ink);
+  }
+
+  h3 {
+    margin-bottom: 0.75rem;
+    font-size: 1rem;
+    font-variation-settings: 'CASL' 0.35, 'wght' 600;
+  }
+
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    padding: 0;
+    list-style: none;
+  }
+
+  .chips li {
+    padding: 0.2rem 0.75rem;
+    border: 1.5px solid var(--line);
+    border-radius: 999px;
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
+
+  .first { margin-top: 0; }
+
+  .cv-end { height: 6rem; }
+
+  @media (max-width: 860px) {
+    .headline { margin-top: 1.1rem; }
+    .entry-title { font-size: 1rem; }
+    .languages { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .cv-end { height: 3rem; }
+  }
+
+  @media print {
+    .bar, .meter span.on { background: #000; }
+    .bar.open { background: linear-gradient(to right, #000 55%, transparent); }
+  }
+</style>

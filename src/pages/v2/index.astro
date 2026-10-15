@@ -1,0 +1,164 @@
+---
+import V2Layout from '../../layouts/V2Layout.astro';
+import Panel from '../../components/v2/Panel.astro';
+
+const publications = [
+  {
+    title: 'Analyzing Novice Programming Behavior in Educational Game Environment: A Custom Language Study with Semantic Adaptation',
+    href: 'https://www.scitepress.org/Link.aspx?doi=10.5220/0014833100004021',
+    meta: 'SciTePress · 2026',
+  },
+  {
+    title: 'Task-aware Semantic Communication for Clustering-based Object Detection in Fire Scenarios',
+    href: 'https://www.diva-portal.org/smash/record.jsf?pid=diva2%3A2080819&dswid=-696',
+    meta: 'Stockholm University · 2026',
+  },
+];
+
+const links = [
+  {
+    label: 'GitHub',
+    href: 'https://github.com/aniqu18',
+    icon: 'M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z',
+  },
+  {
+    label: 'LinkedIn',
+    href: 'https://linkedin.com/in/nikodemkaczmarek',
+    icon: 'M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 01.016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z',
+  },
+];
+---
+
+<V2Layout title="Nikodem Kaczmarek" description="Master's student, researching semantic communication at Ericsson.">
+  <Panel current="home" fill={0.94} />
+
+  <main class="content">
+    <div class="content-inner">
+      <p class="lead">
+        Master's student in AI for Health at Stockholm University,
+        currently researching semantic communication at Ericsson.
+      </p>
+
+      <section class="block" aria-labelledby="about">
+        <h2 class="block-title" id="about">About</h2>
+        <p>
+          I enjoy fixing things that don’t work, not too strong coffee (though that varies with the mood), and spending time with people.<br />I may be a nerd, but that depends on the definition.
+        </p>
+      </section>
+
+      <section class="block" aria-labelledby="publications">
+        <h2 class="block-title" id="publications">Publications</h2>
+        <ul class="pubs">
+          {publications.map((pub) => (
+            <li>
+              <a href={pub.href} target="_blank" rel="noopener">
+                <span class="pub-title">{pub.title}</span>
+                <span class="meta">{pub.meta}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section class="block" aria-labelledby="links">
+        <h2 class="block-title" id="links">Links</h2>
+        <div class="tiles">
+          {links.map((link) => (
+            <a class="tile" href={link.href} target="_blank" rel="noopener">
+              <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d={link.icon} /></svg>
+              {link.label}
+            </a>
+          ))}
+        </div>
+      </section>
+
+      <footer class="content-foot">
+        <span>Nikodem Kaczmarek (2026)</span>
+        <a href="mailto:me@nikodemkaczmarek.com">me@nikodemkaczmarek.com</a>
+      </footer>
+    </div>
+  </main>
+</V2Layout>
+
+<style>
+  .lead {
+    font-size: clamp(1.375rem, 2.4vw, 1.75rem);
+    font-variation-settings: 'CASL' 0.35, 'wght' 430;
+    line-height: 1.35;
+    letter-spacing: -0.01em;
+    text-wrap: pretty;
+  }
+
+  .pubs {
+    padding: 0;
+    list-style: none;
+    border-top: 1.5px solid var(--ink);
+  }
+
+  .pubs li { border-bottom: 1px solid var(--line); }
+
+  .pubs a {
+    display: grid;
+    gap: 0.4rem;
+    margin: 0 -0.75rem;
+    padding: 1.1rem 0.75rem 1.2rem;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: background-color 0.15s;
+  }
+
+  .pubs a:hover { background: var(--hover); }
+
+  .pub-title {
+    font-size: 1.125rem;
+    font-variation-settings: 'CASL' 0.35, 'wght' 560;
+    line-height: 1.4;
+    text-wrap: pretty;
+  }
+
+  .pubs a:hover .pub-title {
+    text-decoration: underline;
+    text-decoration-color: var(--mark);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.2em;
+  }
+
+  .tiles {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+
+  .tile {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.5rem 1.1rem 0.5rem 0.95rem;
+    border: 1.5px solid var(--ink);
+    border-radius: 999px;
+    font-family: var(--display);
+    font-variation-settings: 'wdth' 110, 'wght' 650;
+    font-size: 1.0625rem;
+    text-decoration: none;
+    transition: background-color 0.18s, color 0.18s, border-color 0.18s, font-variation-settings 0.3s;
+  }
+
+  .tile svg {
+    width: 1rem;
+    height: 1rem;
+    fill: currentColor;
+    flex: none;
+  }
+
+  .tile:hover {
+    background: var(--field);
+    border-color: var(--field);
+    color: var(--on-field);
+    font-variation-settings: 'wdth' 125, 'wght' 720;
+  }
+
+  @media (max-width: 860px) {
+    .lead { font-size: 1.25rem; }
+    .pub-title { font-size: 1.0625rem; }
+  }
+</style>
