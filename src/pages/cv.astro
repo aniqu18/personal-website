@@ -26,204 +26,196 @@ const languages = [
 
 const programmingSkills = ['Java', 'C#', 'Python', 'SQL', 'Unity', 'JavaScript', 'TypeScript', 'React', 'CI/CD', 'Linux', '.NET', 'REST APIs', 'Full-Stack', 'Git', 'GitHub Actions', 'Bash', 'CSS3', 'Kotlin', 'YAML'];
 const dataSkills = ['NumPy', 'Pandas', 'Matplotlib', 'PyTorch', 'Scikit-learn', 'R', 'Machine Learning', 'Data visualization', 'CNNs', 'Image processing', 'Semantic communication', 'Task-aware encoding'];
+
+const splitMeta = (text) => text.split(' · ');
 ---
 
-<style>
-  .cv-page .email-link {
-    color: var(--ink);
-    text-decoration: none;
-  }
-
-  .cv-page .email-link:hover {
-    color: var(--accent);
-  }
-
-  .cv-page .tag-chip {
-    color: #4f4741 !important;
-    background: rgba(255, 250, 244, 0.9) !important;
-    border-color: rgba(32, 24, 20, 0.12) !important;
-  }
-
-  .cv-page .keyword {
-    color: #4f4741 !important;
-    background: rgba(255, 250, 244, 0.9) !important;
-  }
-
-  .cv-page .cv-section {
-    margin-bottom: 0.35rem !important;
-    padding-top: 1.15rem !important;
-    padding-bottom: 1.15rem !important;
-  }
-
-  .cv-page .entry + .entry {
-    padding-top: 1rem;
-  }
-
-  .cv-page .entry-title {
-    font-size: 0.95rem !important;
-  }
-
-  .cv-page .entry .text-secondary {
-    font-size: 0.72rem !important;
-  }
-
-  .cv-page .cv-layout {
-    row-gap: 0.35rem !important;
-  }
-
-  .cv-page .cv-main,
-  .cv-page .cv-sidebar {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-
-  .cv-page .cv-main .cv-section,
-  .cv-page .cv-sidebar .cv-section {
-    margin-bottom: 0 !important;
-  }
-
-  .cv-page .cv-sidebar {
-    position: sticky;
-    top: 1rem;
-    align-self: start;
-  }
-
-  .cv-page .language-list {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 0;
-  }
-
-  .cv-page .language-item {
-    padding: 0.2rem 1rem;
-    border-left: 1px solid var(--border-soft);
-  }
-
-  .cv-page .language-item:first-child {
-    padding-left: 0;
-    border-left: 0;
-  }
-
-  @media (max-width: 576px) {
-    .cv-page .language-list {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 1rem 0;
-    }
-
-    .cv-page .language-item:nth-child(3) {
-      padding-left: 0;
-      border-left: 0;
-    }
-  }
-</style>
-
-<BaseLayout title="Nikodem Kaczmarek — CV" description="CV of Nikodem Kaczmarek" current="cv">
+<BaseLayout title="Nikodem Kaczmarek — CV" description="CV of Nikodem Kaczmarek">
   <Fragment slot="nav">
     <Nav current="cv" />
   </Fragment>
 
-  <div class="cv-page">
-  <header class="hero-card rounded-5 p-4 p-md-5 mb-2">
-    <h1 class="hero-title mb-2">Nikodem Kaczmarek</h1>
-    <p class="headline mb-3">Artificial Intelligence Student & Intern</p>
-    <div class="d-flex flex-wrap align-items-center gap-3">
-      <a href="mailto:me@nikodemkaczmarek.com" class="email-link">
-        me@nikodemkaczmarek.com
-      </a>
-      <span class="badge rounded-pill tag-chip fw-normal px-3 py-2">Stockholm</span>
-    </div>
+  <header class="cv-header">
+    <h1>Nikodem Kaczmarek</h1>
+    <p class="headline">Artificial Intelligence Student & Intern</p>
+    <p class="contact">
+      <a class="text-link" href="mailto:me@nikodemkaczmarek.com">me@nikodemkaczmarek.com</a>
+      <span class="place">Stockholm</span>
+    </p>
   </header>
 
-  <div class="row g-4 cv-layout">
-    <main class="col-lg-8 cv-main">
-      <section class="section-card cv-section rounded-5 px-4 px-md-5">
-        <div class="d-flex align-items-center gap-2 mb-4 section-title">
-          <i class="bi bi-briefcase"></i>
-          <span>Experience</span>
-        </div>
-
+  <main class="cv">
+    <section class="row" aria-labelledby="experience">
+      <h2 class="row-label" id="experience">Experience</h2>
+      <div class="row-body entries">
         {experience.map(([title, meta]) => (
           <article class="entry">
-            <p class="entry-title mb-1 fs-5">{title}</p>
-            <p class="text-secondary small mb-0">{meta}</p>
+            <p class="entry-title">
+              {splitMeta(title).map((part, i) => (
+                <>{i > 0 && <span class="sep"> · </span>}<span class={i > 0 ? 'org' : undefined}>{part}</span></>
+              ))}
+            </p>
+            <p class="meta">
+              {splitMeta(meta).map((part, i) => (
+                <>{i > 0 && <span class="sep"> · </span>}{part}</>
+              ))}
+            </p>
           </article>
         ))}
-      </section>
+      </div>
+    </section>
 
-      <section class="section-card cv-section rounded-5 px-4 px-md-5">
-        <div class="d-flex align-items-center gap-2 mb-4 section-title">
-          <i class="bi bi-mortarboard"></i>
-          <span>Education</span>
-        </div>
-
+    <section class="row" aria-labelledby="education">
+      <h2 class="row-label" id="education">Education</h2>
+      <div class="row-body entries">
         {education.map(([title, meta]) => (
           <article class="entry">
-            <p class="entry-title mb-1 fs-5">{title}</p>
-            <p class="text-secondary small mb-0">{meta}</p>
+            <p class="entry-title">{title}</p>
+            <p class="meta">
+              {splitMeta(meta).map((part, i) => (
+                <>{i > 0 && <span class="sep"> · </span>}{part}</>
+              ))}
+            </p>
           </article>
         ))}
-      </section>
+      </div>
+    </section>
 
-      <section class="section-card cv-section rounded-5 px-4 px-md-5">
-        <div class="d-flex align-items-center gap-2 mb-4 section-title">
-          <i class="bi bi-translate"></i>
-          <span>Languages</span>
-        </div>
-
-        <div class="language-list">
-          {languages.map(([language, level]) => (
-            <div class="language-item">
-              <div class="entry-title fs-5 mb-1">{language}</div>
-              <div class="text-secondary small">{level}</div>
-            </div>
-          ))}
-        </div>
-      </section>
-    </main>
-
-    <aside class="col-lg-4 cv-sidebar">
-      <section class="section-card cv-section rounded-5 px-4 px-md-5 mb-2">
-        <div class="d-flex align-items-center gap-2 mb-4 section-title">
-          <i class="bi bi-tools"></i>
-          <span>Skills</span>
-        </div>
-
-        <div class="mb-4">
-          <p class="fw-semibold mb-2">Programming</p>
-          <div class="d-flex flex-wrap gap-2">
-            {programmingSkills.map((skill) => (
-              <span class="badge rounded-pill keyword fw-normal px-3 py-2">{skill}</span>
-            ))}
+    <section class="row" aria-labelledby="languages">
+      <h2 class="row-label" id="languages">Languages</h2>
+      <div class="row-body languages">
+        {languages.map(([language, level]) => (
+          <div>
+            <p class="entry-title">{language}</p>
+            <p class="meta">{level}</p>
           </div>
-        </div>
+        ))}
+      </div>
+    </section>
 
+    <section class="row" aria-labelledby="skills">
+      <h2 class="row-label" id="skills">Skills</h2>
+      <div class="row-body skill-groups">
         <div>
-          <p class="fw-semibold mb-2">Data Science & Statistics</p>
-          <div class="d-flex flex-wrap gap-2">
-            {dataSkills.map((skill) => (
-              <span class="badge rounded-pill keyword fw-normal px-3 py-2">{skill}</span>
-            ))}
-          </div>
+          <h3>Programming</h3>
+          <ul class="tags">
+            {programmingSkills.map((skill) => <li>{skill}</li>)}
+          </ul>
         </div>
-      </section>
-
-      <section class="section-card cv-section rounded-5 px-4 px-md-5">
-        <div class="d-flex align-items-center gap-2 mb-4 section-title">
-          <i class="bi bi-award"></i>
-          <span>Certifications</span>
+        <div>
+          <h3>Data Science & Statistics</h3>
+          <ul class="tags">
+            {dataSkills.map((skill) => <li>{skill}</li>)}
+          </ul>
         </div>
+      </div>
+    </section>
 
+    <section class="row" aria-labelledby="certifications">
+      <h2 class="row-label" id="certifications">Certifications</h2>
+      <div class="row-body entries">
         <article class="entry">
-          <p class="entry-title mb-1 fs-5">AI Agents</p>
-          <p class="text-secondary small mb-0">Hugging Face · March 2025</p>
+          <p class="entry-title">AI Agents</p>
+          <p class="meta">Hugging Face<span class="sep"> · </span>March 2025</p>
         </article>
-        <article class="entry mb-0">
-          <p class="entry-title mb-1 fs-5">IELTS</p>
-          <p class="text-secondary small mb-0">IELTS Official · December 2023</p>
+        <article class="entry">
+          <p class="entry-title">IELTS</p>
+          <p class="meta">IELTS Official<span class="sep"> · </span>December 2023</p>
         </article>
-      </section>
-    </aside>
-  </div>
-  </div>
+      </div>
+    </section>
+  </main>
 </BaseLayout>
+
+<style>
+  .cv-header {
+    padding: clamp(3rem, 9vw, 6rem) 0 2.5rem;
+  }
+
+  h1 {
+    margin: 0;
+    font-size: clamp(2.5rem, 6.4vw, 4.5rem);
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+  }
+
+  .headline {
+    margin-top: 0.9rem;
+    font-size: clamp(1.125rem, 2vw, 1.3125rem);
+    color: var(--muted);
+  }
+
+  .contact {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.5rem 1.5rem;
+    margin-top: 1.5rem;
+    font-weight: 500;
+  }
+
+  .place { color: var(--muted); }
+
+  .cv { padding-bottom: 4rem; }
+
+  .entries {
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  .entry-title {
+    font-family: var(--serif);
+    font-size: 1.1875rem;
+    font-weight: 500;
+    line-height: 1.35;
+  }
+
+  .entry-title .org { color: var(--muted); }
+
+  .entry .meta { margin-top: 0.15rem; }
+
+  .languages {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.25rem 1.5rem;
+  }
+
+  .skill-groups {
+    display: grid;
+    gap: 1.75rem;
+  }
+
+  h3 {
+    margin: 0 0 0.7rem;
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .tags li {
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+    background: var(--tag);
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
+
+  @media (max-width: 720px) {
+    .languages { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+
+  @media print {
+    .cv-header { padding: 0 0 1rem; }
+    h1 { font-size: 26pt; }
+    .tags li { border: 1px solid #ccc; background: none; }
+  }
+</style>

@@ -1,12 +1,40 @@
 ---
 const { current = 'home' } = Astro.props;
+
+const links = [
+  { id: 'home', href: '/', label: 'Home' },
+  { id: 'cv', href: '/cv/', label: 'CV' },
+];
 ---
 
-<nav class="navbar nav-pill navbar-expand-sm rounded-pill px-3 px-md-4 py-2 mb-4">
-  <div class="container-fluid px-0 justify-content-end">
-    <div class="d-flex gap-2">
-      <a class={`btn btn-sm rounded-pill px-3 ${current === 'home' ? 'btn-dark' : 'btn-outline-secondary'}`} href="/">Home</a>
-      <a class={`btn btn-sm rounded-pill px-3 ${current === 'cv' ? 'btn-dark' : 'btn-outline-secondary'}`} href="/cv/">CV</a>
-    </div>
-  </div>
+<nav class="site-nav" aria-label="Main">
+  {links.map((link) => (
+    <a href={link.href} aria-current={current === link.id ? 'page' : undefined}>{link.label}</a>
+  ))}
 </nav>
+
+<style>
+  .site-nav {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1.75rem;
+    padding: 1.75rem 0 0;
+    font-size: 0.9375rem;
+    font-weight: 500;
+  }
+
+  a {
+    color: var(--muted);
+    text-decoration: none;
+    padding: 0.25rem 0;
+    border-bottom: 2px solid transparent;
+    transition: color 0.15s, border-color 0.15s;
+  }
+
+  a:hover { color: var(--ink); }
+
+  a[aria-current='page'] {
+    color: var(--ink);
+    border-bottom-color: var(--accent);
+  }
+</style>
