@@ -4,7 +4,7 @@ import Panel from '../../components/v2/Panel.astro';
 
 
 const experience = [
-  ['Master Thesis Intern · Ericsson', 'Stockholm · 2026 - Present'],
+  ['R&D Intern · Ericsson', 'Stockholm · 2026 - Present'],
   ['Dog Walker · Tassevärld', 'Stockholm · 2025'],
   ['Software Developer · Kyri. Good Research (Startup Project)', 'Stockholm · 2025'],
   ['Unity Software Developer · Poznan University of Economics and Business', 'Poznan · 2023 - 2024'],
@@ -13,20 +13,24 @@ const experience = [
 ];
 
 const education = [
-  ['Stockholm University', 'Master’s Programme in AI for Health · 2024 - Present'],
+  ['Stockholm University', 'Master’s Programme in AI for Health · 2024 - 2026'],
   ['Poznan University of Economics and Business', 'Bachelor’s Programme in Informatics and Econometrics · 2021 - 2024'],
   ['PSI Poland', 'Java Course · 2023'],
 ];
 
 const languages = [
   ['Polish', 'Native'],
-  ['English', 'C1 (IELTS)'],
+  ['English', 'C1'],
   ['Spanish', 'B1'],
   ['Swedish', 'A2'],
 ];
 
-const programmingSkills = ['Java', 'C#', 'Python', 'SQL', 'Unity', 'JavaScript', 'TypeScript', 'React', 'CI/CD', 'Linux', '.NET', 'REST APIs', 'Full-Stack', 'Git', 'GitHub Actions', 'Bash', 'CSS3', 'Kotlin', 'YAML'];
-const dataSkills = ['NumPy', 'Pandas', 'Matplotlib', 'PyTorch', 'Scikit-learn', 'R', 'Machine Learning', 'Data visualization', 'CNNs', 'Image processing', 'Semantic communication', 'Task-aware encoding'];
+const skillGroups = [
+  ['Programming', ['Java', 'C#', 'Python', 'SQL', 'JavaScript', 'HTML', 'TypeScript', 'React', 'CI/CD', '.NET', 'RESTful APIs', 'Web development', 'Full-Stack', 'Git', 'Databases', 'GitHub Actions', 'Android Studio', 'Bash', 'CSS3', 'Kotlin', 'YAML', 'C', 'C++']],
+  ['Data Science & Statistics', ['Python', 'NumPy', 'Pandas', 'Matplotlib', 'PyTorch', 'Scikit-learn', 'R', 'Machine Learning', 'Reinforcement Learning', 'Data querying', 'Data visualization', 'CNNs', 'Image processing', 'Probability Theory', 'Optimization']],
+  ['Research', ['Semantic Technologies', 'LLMs', 'XR']],
+  ['XR & Robotics', ['Monado', 'Unity', 'Basalt', 'RTAB-Map', 'SLAM systems']],
+];
 
 // Experience and education spans are drawn on a shared 2020–2026 track.
 const FIRST = 2020;
@@ -51,7 +55,7 @@ const steps = (level) => levelSteps[level.split(' ')[0]] ?? 0;
 
 <V2Layout title="Nikodem Kaczmarek — CV" description="CV of Nikodem Kaczmarek">
   <Panel current="cv" fill={0.8}>
-    <p class="headline">Artificial Intelligence Student & Intern</p>
+    <p class="headline">R&D Intern at Ericsson</p>
     <p class="contact">
       <a href="mailto:me@nikodemkaczmarek.com">me@nikodemkaczmarek.com</a>
       <span>Stockholm</span>
@@ -118,18 +122,14 @@ const steps = (level) => levelSteps[level.split(' ')[0]] ?? 0;
       <section class="block" aria-labelledby="skills">
         <h2 class="block-title" id="skills">Skills</h2>
         <div class="skill-groups">
-          <div>
-            <h3>Programming</h3>
-            <ul class="chips">
-              {programmingSkills.map((skill) => <li>{skill}</li>)}
-            </ul>
-          </div>
-          <div>
-            <h3>Data Science & Statistics</h3>
-            <ul class="chips">
-              {dataSkills.map((skill) => <li>{skill}</li>)}
-            </ul>
-          </div>
+          {skillGroups.map(([group, skills]) => (
+            <div>
+              <h3>{group}</h3>
+              <ul class="chips">
+                {skills.map((skill) => <li>{skill}</li>)}
+              </ul>
+            </div>
+          ))}
         </div>
       </section>
 
